@@ -5,10 +5,11 @@ from transformers import (
     AutoModelForCausalLM
 )
 from peft import LoraConfig, get_peft_model
-from common import logger
+from common import logger, Flags
 
 
-def get_model(model_name: str="Qwen/Qwen2.5-1.5B"):
+def get_model():
+    model_name = Flags.get("pretrained_model_name")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name)
 
