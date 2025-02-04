@@ -20,4 +20,4 @@ jobs:
         pip install poetry
         poetry install --no-root
     - name: Test module
-      run: poertry run pytest
+      run: poetry run pytest
