@@ -53,6 +53,7 @@ class FlagStore(metaclass=SingletonMeta):
         prog="ProgramName",
         description="What the program does",
         epilog="Text at the bottom of help",
+        add_help=False
     )
     flags: Dict[str, Flag] = {}
     def __init__(self):
