@@ -43,8 +43,9 @@ poetry python main.py --train_mode true --model_path "model_saved"
 ### Inference
 
 To generate predictions:
-
+```python
 poetry python main.py --query "Your text input here" --model_path "path/to/trained/model"
+```
 
 ### Running Tests
 
