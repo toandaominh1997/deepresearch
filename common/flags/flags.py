@@ -75,9 +75,12 @@ class Flags:
     def create(cls, name: str, default: Any, description: str = "Help ...") -> Flag:
         flag_type = type(default)
         try:
-            cls.parser.add_argument(
-                f"--{name}", default=default, help=description, type=flag_type, required=False
-            )
+            if name not in cls.flags.keys():
+                cls.parser.add_argument(
+                    f"--{name}", default=default, help=description, type=flag_type, required=False
+                )
+            else:
+                logger.info(f"There are an exist argument: {name}")
         except Exception as e:
             logger.error(f"Error when add_argument: {e}")
         flag = Flag(name, description, default, flag_type)
@@ -86,7 +89,8 @@ class Flags:
 
     @classmethod
     def parse(cls):
-        cls.parser.add_argument("-f", required=False)
+        
+        # cls.parser.add_argument("-f", required=False)
         # args = cls.parser.parse_args()
         args, unknown = cls.parser.parse_known_args()
         logger.debug("Parsing flags", args.__dict__)
