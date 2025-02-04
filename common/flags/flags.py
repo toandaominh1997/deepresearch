@@ -53,7 +53,7 @@ class FlagStore(metaclass=SingletonMeta):
         prog="ProgramName",
         description="What the program does",
         epilog="Text at the bottom of help",
-        add_help=False
+        conflict_handler='resolve'
     )
     flags: Dict[str, Flag] = {}
     def __init__(self):
@@ -87,7 +87,8 @@ class Flags:
     @classmethod
     def parse(cls):
         cls.parser.add_argument("-f", required=False)
-        args = cls.parser.parse_args()
+        # args = cls.parser.parse_args()
+        args, unknown = cls.parser.parse_known_args()
         logger.debug("Parsing flags", args.__dict__)
         for flag_name, flag in cls.flags.items():
             setattr(flag, "value", getattr(args, flag_name))
