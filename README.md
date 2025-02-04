@@ -37,7 +37,7 @@ poetry install
 
 To train the model, run:
 ```python
-poetry python main.py --train_mode True --model_path "model_saved"
+poetry python main.py --train_mode true --model_path "model_saved"
 ```
 
 ### Inference
