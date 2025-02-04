@@ -1,0 +1,23 @@
+name: PYTEST CI Full Pipeline
+
+on:
+  push: { }
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'  # Change as needed
+    - name: Install poetry
+      run: |
+        pip install poetry
+        poetry install --no-root
+    - name: Test module
+      run: poertry run pytest

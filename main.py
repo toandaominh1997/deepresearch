@@ -1,14 +1,4 @@
-from peft import LoraConfig, get_peft_model
-from trl import SFTConfig, SFTTrainer
-from transformers import (
-    pipeline,
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    TrainingArguments,
-    Trainer,
-    DataCollatorForLanguageModeling,
-)
-
+from typing import *
 from common import Flags, logger, timeit
 from src.train import training
 from src.inference import inference
@@ -26,7 +16,7 @@ output: {response}
 def solve():
     Flags.create("model_path", "model_saved", "Model path")
     Flags.create("train_mode", False, "Training mode")
-    Flags.create("query", "Say hello to me", "Query to LLM model")
+    Flags.create("query", "Hello", "Query to LLM model")
     Flags.parse()
     logger.info(f"Config: {Flags.getParse()}")
 
