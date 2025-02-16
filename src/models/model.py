@@ -14,9 +14,16 @@ def get_model():
     model_name = Flags.get("pretrained_model_name")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     if torch.cuda.is_available():
-        model = AutoModelForCausalLM.from_pretrained(model_name, load_in_4bit=True, device_map="auto")
+        quantization_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                )
+        model = AutoModelForCausalLM.from_pretrained(model_name, 
+                                                     quantization_config=quantization_config, 
+                                                     device_map="auto")
     else:
-        model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
+        model = AutoModelForCausalLM.from_pretrained(model_name,
+                                                     torch_dtype=torch.bfloat16,
+                                                     device_map="auto")
 
 
     logger.info(f"""
