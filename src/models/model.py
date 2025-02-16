@@ -1,8 +1,10 @@
 from typing import *
+import torch
 from transformers import (
     pipeline,
     AutoTokenizer,
-    AutoModelForCausalLM
+    AutoModelForCausalLM,
+    BitsAndBytesConfig
 )
 from peft import LoraConfig, get_peft_model
 from common import logger, Flags
@@ -11,7 +13,11 @@ from common import logger, Flags
 def get_model():
     model_name = Flags.get("pretrained_model_name")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name)
+    if torch.cuda.is_available():
+        model = AutoModelForCausalLM.from_pretrained(model_name, load_in_4bit=True, device_map="auto")
+    else:
+        model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
+
 
     logger.info(f"""
 MEMORY_FOOTPRINT: {model.get_memory_footprint()}
